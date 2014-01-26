@@ -1,6 +1,4 @@
-/*!!cmd:compress=true*/
-/*!!cmd:jsCompressOpt=["--disable-optimizations"]*/
-/*! lofty.js build 14/01/26 15:42:48 */
+/*! lofty.js build 14/01/26 15:59:16 */
 /*! fmd.js v0.2.0 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot

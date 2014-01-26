@@ -101,7 +101,7 @@ module.exports = function( grunt ){
             mobile_js: {
                 options: {
                     separator: '\n\n',
-                    banner: compressTpl + '\n' + compileTpl + '\n/*! lofty.js build ' + timeTpl + ' */\n'
+                    banner: '/*! lofty.js build ' + timeTpl + ' */\n'
                 },
                 files: [{
                     src: mobileScriptSource,
@@ -111,7 +111,7 @@ module.exports = function( grunt ){
             mobile_css: {
                 options: {
                     separator: '\n\n',
-                    banner: compressTpl + '\n/*! lofty.css build ' + timeTpl + ' */\n'
+                    banner: '/*! lofty.css build ' + timeTpl + ' */\n'
                 },
                 files: [{
                     src: mobileStyleSource,
