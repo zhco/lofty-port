@@ -1,0 +1,28 @@
+{
+    "name": "lofty",
+    "version": "0.1.0",
+    "description": "the kernel of the lofty-desktop and lofty-mobile",
+    "homepage": "http://lofty.fangdeng.org/",
+    "author": {
+        "name": "Edgar Hoo",
+        "email": "mail@edgar.im"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/fangdeng/lofty.git"
+    },
+    "licenses": [{
+        "type": "MIT",
+        "url": "http://www.opensource.org/licenses/mit-license.php"
+    }],
+    "keywords": ["lofty","FMD","module","fmd.js","UI","mobile"],
+    "engines": {
+        "node": ">=0.8.0"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.0",
+        "grunt-contrib-jshint": "~0.1.1",
+        "grunt-contrib-concat": "~0.3.0"
+    },
+    "dependencies": {}
+}

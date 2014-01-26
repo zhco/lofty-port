@@ -1,0 +1,16 @@
+/**
+ * @module layout.css for lofty mobile
+ * @author Edgar <mail@edgarhoo.net>
+ * @version v0.1
+ * @date 131231
+ * */
+
+#header:after,
+#content:after,
+#footer:after,
+.layout:after {
+	display: block;
+	clear: both;
+	height: 0;
+	content: "\0020";
+}

@@ -1,0 +1,42 @@
+{
+    "passfail": false,
+    
+    "browser": true,
+    "globals": {
+        "fmd": true,
+        "define": true,
+        "lofty": true,
+        "Wing": true,
+        "jQuery": true,
+        "af": true
+    },
+    
+    "devel": false,
+    "debug": false,
+    
+    "es5": true,
+    "strict": false,
+    "esnext": false,
+    
+    "asi": false,
+    "boss": true,
+    "curly": true,
+    "expr": true,
+    "eqeqeq": true,
+    "eqnull": false,
+    "evil": false,
+    "forin": false,
+    "immed": true,
+    "laxbreak": false,
+    "newcap": true,
+    "noarg": true,
+    "noempty": true,
+    "nomen": false,
+    "plusplus": false,
+    "undef": true,
+    "sub": true,
+    "white": false,
+    "proto": true,
+    "loopfunc": true,
+    "undef": true
+}
