@@ -2,9 +2,9 @@
  * for load assets from mobile
  * */
 
-window.Wing && Wing.navigator && Wing.navigator.getRealURL && fmd( 'lofty/app', ['event'], function( event ){
+window.Wing && Wing.navigator && Wing.navigator.getRealURL && fmd( 'lofty/mobile', ['event'], function( event ){
     
-    var rLocal = /(?:[\w]+)\:\/\/(?:[\w|\.|\:]+)\/m\/(.*\.\w*)(?:[\?|\#].*)/i;
+    var rLocal = /^https?\:\/\/(?:[\w|\.|\:]+)\/m\/(.*\.\w*)(?:[\?|\#].*)/i;
     
     var turn = function( url ){
         
@@ -20,7 +20,12 @@ window.Wing && Wing.navigator && Wing.navigator.getRealURL && fmd( 'lofty/app', 
         if ( localUrl ){
             localUrl = Wing.navigator.getRealURL( localUrl );
             
-            localUrl ? ( asset.url = localUrl ) : event.emit( 'mobileAssetNotFound', asset );
+            if ( localUrl ){
+                asset.url = localUrl;
+                asset.comboed = true;
+            } else {
+                event.emit( 'mobileAssetNotFound', asset );
+            }
         } else {
             event.emit( 'mobileAssetNotMatch', asset );
         }

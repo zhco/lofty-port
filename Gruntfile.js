@@ -27,6 +27,7 @@ module.exports = function( grunt ){
     ],
     mobileScriptSource = [
         'vendor/fmdjs/fmd-aio-debug.js',
+        'vendor/fmdjs/plugin/combo-debug.js',
         'src/wrap/intro.js',
         'src/host/appframe.js',
         'src/adapter/amd.js',
