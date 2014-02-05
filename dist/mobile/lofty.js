@@ -1,5 +1,5 @@
-/*! lofty.js build 14/01/27 14:44:11 */
-/*! fmd.js v0.2.0 | http://fmdjs.org/ | MIT */
+/*! lofty.js build 14/02/06 00:01:32 */
+/*! fmd.js v0.2.1 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot
  * @author Edgar <mail@edgar.im>
@@ -51,7 +51,7 @@
     };
     
     
-    fmd.version = '0.2.0';
+    fmd.version = '0.2.1';
     
     fmd.cache = {
         parts: parts
@@ -339,8 +339,8 @@ fmd( 'config', ['env','cache','lang'],
 /**
  * @module fmd/module
  * @author Edgar <mail@edgar.im>
- * @version v0.3
- * @date 131111
+ * @version v0.3.1
+ * @date 140205
  * */
 
 
@@ -562,6 +562,8 @@ fmd( 'module', ['global','env','cache','lang','event'],
         Module.save( new Module( id, deps, factory ) );
     };
     
+    /* sign for FMD */
+    Module.define.fmd = {};
     
     /* exports API to fmd */
     var originalDefine = global.define;
