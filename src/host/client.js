@@ -2,32 +2,42 @@
  * for load assets from mobile
  * */
 
-window.Wing && Wing.navigator && Wing.navigator.getRealURL && fmd( 'lofty/mobile', ['event'], function( event ){
+if ( window.Wing && Wing.navigator ){
     
-    var rLocal = /^https?\:\/\/(?:[\w|\.|\:]+)\/m\/(.*\.\w*)(?:[\?|\#].*)/i;
+    var isRealWing = !!Wing.navigator.getRealURL,
+        wingNavigator = Wing.navigator;
     
-    var turn = function( url ){
+    fmd( 'lofty/mobile', ['event'], function( event ){
         
-        var result = url.match( rLocal );
+        var rLocal = isRealWing ? /^https?\:\/\/(?:[\w|\.|\:]+)\/m\/(.*\.\w*)(?:[\?|\#].*)/i : /^https?\:\/\/(?:[\w|\.|\:]+)\/m(\/.*)/i;
         
-        return result && result[1];
-    };
-    
-    event.on( 'id2url', function( asset ){
-        //http://style.c.aliimg.com/m/lofty/lang/observer.js?fmd.stamp=xxx
-        var localUrl = turn( asset.url );
+        var turn = function( url ){
+            
+            var result = url.match( rLocal );
+            
+            return result && result[1];
+        };
         
-        if ( localUrl ){
-            localUrl = Wing.navigator.getRealURL( localUrl );
+        event.on( 'id2url', function( asset ){
+            //http://style.c.aliimg.com/m/lofty/lang/observer.js?fmd.stamp=xxx
+            var localUrl = turn( asset.url );
             
             if ( localUrl ){
-                asset.url = localUrl;
-                asset.comboed = true;
+                
+                if ( isRealWing ){
+                    localUrl = wingNavigator.getRealURL( localUrl );
+                }
+                
+                if ( localUrl ){
+                    asset.url = localUrl;
+                    asset.comboed = true;
+                } else {
+                    event.emit( 'mobileAssetNotFound', asset );
+                }
             } else {
-                event.emit( 'mobileAssetNotFound', asset );
+                event.emit( 'mobileAssetNotMatch', asset );
             }
-        } else {
-            event.emit( 'mobileAssetNotMatch', asset );
-        }
+        } );
     } );
-} );
+    
+}

@@ -1,7 +1,7 @@
 /**
  * the Gruntfile for lofty
  * @author Edgar
- * @date 140126
+ * @date 140228
  * */
 
 module.exports = function( grunt ){
@@ -11,11 +11,12 @@ module.exports = function( grunt ){
         timeTpl = grunt.template.today('yy/mm/dd') + ' ' + grunt.template.today('HH:MM:ss');
     
     var desktopScriptSource = [
-        'vendor/fmdjs/fmd-aio-debug.js',
-        'vendor/fmdjs/plugin/combo-debug.js',
+        'vendor/fmdjs/fmd-debug.js',
+        'vendor/fmdjs/fmd/plugin.js',
+        'vendor/fmdjs/plugins/non-debug.js',
+        'vendor/fmdjs/plugins/combo-debug.js',
         'src/wrap/intro.js',
         'src/host/appframe.js',
-        'src/adapter/amd.js',
         'src/host/convert.js',
         'src/host/debug.js',
         'src/config/config-desktop.js',
@@ -26,11 +27,12 @@ module.exports = function( grunt ){
         'src/wrap/outro.js'
     ],
     mobileScriptSource = [
-        'vendor/fmdjs/fmd-aio-debug.js',
-        'vendor/fmdjs/plugin/combo-debug.js',
+        'vendor/fmdjs/fmd-debug.js',
+        'vendor/fmdjs/fmd/plugin.js',
+        'vendor/fmdjs/plugins/non-debug.js',
+        'vendor/fmdjs/plugins/combo-debug.js',
         'src/wrap/intro.js',
         'src/host/appframe.js',
-        'src/adapter/amd.js',
         'src/host/convert.js',
         'src/host/client.js',
         'src/host/debug.js',

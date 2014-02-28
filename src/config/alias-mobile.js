@@ -34,6 +34,5 @@ lofty.config({
 		"util/tplhandler/1.0":"lofty/util/template/1.0/tplhandler",
 		"util/router/1.0":"lofty/util/router/1.0/router",
 		"util/lazyload/1.0":"lofty/util/lazyload/1.0/lazyload"
-	
     }
 });

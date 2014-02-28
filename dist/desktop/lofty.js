@@ -1,6 +1,6 @@
 /*!!cmd:compress=true*/
 /*!!cmd:jsCompressOpt=["--disable-optimizations"]*/
-/*! lofty.js build 14/02/06 00:01:18 */
+/*! lofty.js build 14/02/28 16:24:36 */
 /*! fmd.js v0.2.1 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot
@@ -583,6 +583,38 @@ fmd( 'module', ['global','env','cache','lang','event'],
 
 
 /**
+ * @module fmd/alias
+ * @author Edgar <mail@edgar.im>
+ * @version v0.2
+ * @date 131010
+ * */
+
+
+fmd( 'alias', ['config','event'],
+    function( config, event ){
+    'use strict';
+    
+    var ALIAS = 'alias';
+    
+    config.register({
+        keys: ALIAS,
+        name: 'object'
+    });
+    
+    event.on( ALIAS, function( meta ){
+        
+        var aliases = config.get( ALIAS ),
+            alias;
+        
+        if ( aliases && ( alias = aliases[meta.id] ) ){
+            meta.id = alias;
+        }
+    } );
+    
+} );
+
+
+/**
  * @module fmd/relative
  * @author Edgar <mail@edgar.im>
  * @version v0.1
@@ -638,38 +670,6 @@ fmd( 'relative', ['lang','event','module'],
     
     
     return relative;
-    
-} );
-
-
-/**
- * @module fmd/alias
- * @author Edgar <mail@edgar.im>
- * @version v0.2
- * @date 131010
- * */
-
-
-fmd( 'alias', ['config','event'],
-    function( config, event ){
-    'use strict';
-    
-    var ALIAS = 'alias';
-    
-    config.register({
-        keys: ALIAS,
-        name: 'object'
-    });
-    
-    event.on( ALIAS, function( meta ){
-        
-        var aliases = config.get( ALIAS ),
-            alias;
-        
-        if ( aliases && ( alias = aliases[meta.id] ) ){
-            meta.id = alias;
-        }
-    } );
     
 } );
 
@@ -1855,25 +1855,6 @@ lofty.appframe = appframe;
 lofty.cache = fmd.cache;
 
 
-/**
- * for amd config
- * */
-
-fmd('lofty/amd',['config'],function( config ){
-    
-    /* for config amd */
-    config.register({
-        keys: 'amd',
-        rule: function( current, key, val ){
-            config.set({
-                async: val
-            });
-        }
-    });
-    
-});
-
-
 /*
  * url convert
  * */
@@ -1989,7 +1970,7 @@ lofty.config({
         "lofty/class": "lofty/lang/class",
         "lofty/log": "lofty/lang/log",
         "lofty/aop": "lofty/lang/aop",
-
+        
         // UI Components
         "fui/widget/1.0": "lofty/ui/widget/1.0/widget",
         "fui/tabs/1.0":"lofty/ui/tabs/1.0/tabs",
@@ -1997,7 +1978,7 @@ lofty.config({
         "fui/autocomplete/1.0":"lofty/ui/autocomplete/1.0/autocomplete",
         "fui/autorender/1.0":"lofty/ui/autorender/1.0/autorender",
         "fui/suggestion/1.0":"lofty/ui/suggestion/1.0/suggestion",
-        "fui/suggestionAll/1.0":"lofty/ui/suggestion/1.0/suggestion.all",				
+        "fui/suggestion-all/1.0":"lofty/ui/suggestion/1.0/suggestion-all",                
         "fui/progressbar/1.0":"lofty/ui/progressbar/1.0/progressbar",
         "fui/placeholder/1.0":"lofty/ui/placeholder/1.0/placeholder",
         "fui/paging/1.0":"lofty/ui/paging/1.0/paging",
@@ -2012,8 +1993,9 @@ lofty.config({
         "fui/dialog/1.0":"lofty/ui/dialog/1.0/dialog",
         "fui/position/1.0":"lofty/ui/position/1.0/position",
         "fui/timer/1.0":"lofty/ui/timer/1.0/timer",
-		"fui/sidebar/2.0":"lofty/ui/sidebar/2.0/sidebar",
+        "fui/sidebar/2.0":"lofty/ui/sidebar/2.0/sidebar",
         
+
         // Util Components
         "util/cookie/1.0":"lofty/util/cookie/1.0/cookie",
         "util/websocket/1.0":"lofty/util/websocket/1.0/websocket",
@@ -2021,7 +2003,7 @@ lofty.config({
         "util/misc/1.0":"lofty/util/misc/1.0/misc",
         "util/history/1.0":"lofty/util/history/1.0/history",
         "util/template/1.0":"lofty/util/template/1.0/template",
-        "util/historyManager/1.0":"lofty/util/history/1.0/historyManager",
+        "util/history-manager/1.0":"lofty/util/history/1.0/history-manager",
         "util/datalazyload/1.0":"lofty/util/datalazyload/1.0/datalazyload",
         
         // Alibaba Bussiness Components
@@ -2031,13 +2013,10 @@ lofty.config({
         "alicn/monitor/1.0":"lofty/alicn/monitor/1.0/monitor",
         "alicn/aliuser/1.0":"lofty/alicn/aliuser/1.0/aliuser",
         "alicn/alitalk/1.0":"lofty/alicn/alitalk/1.0/alitalk",
-        "alicn/alitalk-shunt/1.0":"lofty/alicn/alitalk/1.0/alitalkShunt",
+        "alicn/alitalk-shunt/1.0":"lofty/alicn/alitalk/1.0/alitalk-shunt",
         
         // Alibaba sys Components
-        "sys/alibar/1.0":"sys/universal/alibar/standardV5",
-
-        // Mobile UI Components
-        "mui/scroller/1.0": "lofty-mobile/ui/scroller/1.0/iscroll"
+        "sys/alibar/1.0":"sys/universal/alibar/standard-v5"
     }
 });
 

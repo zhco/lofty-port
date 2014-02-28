@@ -1,4 +1,4 @@
-/*! lofty.js build 14/02/06 00:01:32 */
+/*! lofty.js build 14/02/28 16:24:54 */
 /*! fmd.js v0.2.1 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot
@@ -581,6 +581,38 @@ fmd( 'module', ['global','env','cache','lang','event'],
 
 
 /**
+ * @module fmd/alias
+ * @author Edgar <mail@edgar.im>
+ * @version v0.2
+ * @date 131010
+ * */
+
+
+fmd( 'alias', ['config','event'],
+    function( config, event ){
+    'use strict';
+    
+    var ALIAS = 'alias';
+    
+    config.register({
+        keys: ALIAS,
+        name: 'object'
+    });
+    
+    event.on( ALIAS, function( meta ){
+        
+        var aliases = config.get( ALIAS ),
+            alias;
+        
+        if ( aliases && ( alias = aliases[meta.id] ) ){
+            meta.id = alias;
+        }
+    } );
+    
+} );
+
+
+/**
  * @module fmd/relative
  * @author Edgar <mail@edgar.im>
  * @version v0.1
@@ -636,38 +668,6 @@ fmd( 'relative', ['lang','event','module'],
     
     
     return relative;
-    
-} );
-
-
-/**
- * @module fmd/alias
- * @author Edgar <mail@edgar.im>
- * @version v0.2
- * @date 131010
- * */
-
-
-fmd( 'alias', ['config','event'],
-    function( config, event ){
-    'use strict';
-    
-    var ALIAS = 'alias';
-    
-    config.register({
-        keys: ALIAS,
-        name: 'object'
-    });
-    
-    event.on( ALIAS, function( meta ){
-        
-        var aliases = config.get( ALIAS ),
-            alias;
-        
-        if ( aliases && ( alias = aliases[meta.id] ) ){
-            meta.id = alias;
-        }
-    } );
     
 } );
 
@@ -1853,25 +1853,6 @@ lofty.appframe = appframe;
 lofty.cache = fmd.cache;
 
 
-/**
- * for amd config
- * */
-
-fmd('lofty/amd',['config'],function( config ){
-    
-    /* for config amd */
-    config.register({
-        keys: 'amd',
-        rule: function( current, key, val ){
-            config.set({
-                async: val
-            });
-        }
-    });
-    
-});
-
-
 /*
  * url convert
  * */
@@ -1890,35 +1871,45 @@ lofty.on( 'resolve', function( asset ){
  * for load assets from mobile
  * */
 
-window.Wing && Wing.navigator && Wing.navigator.getRealURL && fmd( 'lofty/mobile', ['event'], function( event ){
+if ( window.Wing && Wing.navigator ){
     
-    var rLocal = /^https?\:\/\/(?:[\w|\.|\:]+)\/m\/(.*\.\w*)(?:[\?|\#].*)/i;
+    var isRealWing = !!Wing.navigator.getRealURL,
+        wingNavigator = Wing.navigator;
     
-    var turn = function( url ){
+    fmd( 'lofty/mobile', ['event'], function( event ){
         
-        var result = url.match( rLocal );
+        var rLocal = isRealWing ? /^https?\:\/\/(?:[\w|\.|\:]+)\/m\/(.*\.\w*)(?:[\?|\#].*)/i : /^https?\:\/\/(?:[\w|\.|\:]+)\/m(\/.*)/i;
         
-        return result && result[1];
-    };
-    
-    event.on( 'id2url', function( asset ){
-        //http://style.c.aliimg.com/m/lofty/lang/observer.js?fmd.stamp=xxx
-        var localUrl = turn( asset.url );
+        var turn = function( url ){
+            
+            var result = url.match( rLocal );
+            
+            return result && result[1];
+        };
         
-        if ( localUrl ){
-            localUrl = Wing.navigator.getRealURL( localUrl );
+        event.on( 'id2url', function( asset ){
+            //http://style.c.aliimg.com/m/lofty/lang/observer.js?fmd.stamp=xxx
+            var localUrl = turn( asset.url );
             
             if ( localUrl ){
-                asset.url = localUrl;
-                asset.comboed = true;
+                
+                if ( isRealWing ){
+                    localUrl = wingNavigator.getRealURL( localUrl );
+                }
+                
+                if ( localUrl ){
+                    asset.url = localUrl;
+                    asset.comboed = true;
+                } else {
+                    event.emit( 'mobileAssetNotFound', asset );
+                }
             } else {
-                event.emit( 'mobileAssetNotFound', asset );
+                event.emit( 'mobileAssetNotMatch', asset );
             }
-        } else {
-            event.emit( 'mobileAssetNotMatch', asset );
-        }
+        } );
     } );
-} );
+    
+}
 
 
 /**
@@ -2053,7 +2044,6 @@ lofty.config({
 		"util/tplhandler/1.0":"lofty/util/template/1.0/tplhandler",
 		"util/router/1.0":"lofty/util/router/1.0/router",
 		"util/lazyload/1.0":"lofty/util/lazyload/1.0/lazyload"
-	
     }
 });
 

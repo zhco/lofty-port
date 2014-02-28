@@ -580,6 +580,38 @@ fmd( 'module', ['global','env','cache','lang','event'],
 
 
 /**
+ * @module fmd/alias
+ * @author Edgar <mail@edgar.im>
+ * @version v0.2
+ * @date 131010
+ * */
+
+
+fmd( 'alias', ['config','event'],
+    function( config, event ){
+    'use strict';
+    
+    var ALIAS = 'alias';
+    
+    config.register({
+        keys: ALIAS,
+        name: 'object'
+    });
+    
+    event.on( ALIAS, function( meta ){
+        
+        var aliases = config.get( ALIAS ),
+            alias;
+        
+        if ( aliases && ( alias = aliases[meta.id] ) ){
+            meta.id = alias;
+        }
+    } );
+    
+} );
+
+
+/**
  * @module fmd/relative
  * @author Edgar <mail@edgar.im>
  * @version v0.1
@@ -635,38 +667,6 @@ fmd( 'relative', ['lang','event','module'],
     
     
     return relative;
-    
-} );
-
-
-/**
- * @module fmd/alias
- * @author Edgar <mail@edgar.im>
- * @version v0.2
- * @date 131010
- * */
-
-
-fmd( 'alias', ['config','event'],
-    function( config, event ){
-    'use strict';
-    
-    var ALIAS = 'alias';
-    
-    config.register({
-        keys: ALIAS,
-        name: 'object'
-    });
-    
-    event.on( ALIAS, function( meta ){
-        
-        var aliases = config.get( ALIAS ),
-            alias;
-        
-        if ( aliases && ( alias = aliases[meta.id] ) ){
-            meta.id = alias;
-        }
-    } );
     
 } );
 
@@ -1317,260 +1317,5 @@ fmd( 'logger', ['global','require','env','config','assets','loader','console'],
             this.debug = val;
         }
     });
-    
-} );
-
-
-/**
- * @module fmd/plugin
- * @author Edgar <mail@edgar.im>
- * @version v0.1
- * @date 131010
- * */
-
-
-fmd( 'plugin', ['cache','lang','event','config','when','remote'],
-    function( cache, lang, event, config, when, remote ){
-    'use strict';
-    
-    var pluginCache = cache.plugin = {};
-    
-    var rPlugin = /(.+)!(.+)/;
-    
-    var ANALYZE = 'analyze';
-    
-    
-    var plugin = {
-        defaultPlugin: 'async',
-        
-        register: function( name, execute ){
-            pluginCache[name] = execute;
-        },
-        
-        sorting: function( group ){
-            
-            var tasks = [],
-                flag = {},
-                taskIndex,
-                task;
-            
-            lang.forEach( group, function( asset ){
-                
-                if ( flag[asset.plugin] > -1 ){
-                    task = tasks[flag[asset.plugin]];
-                } else {
-                    taskIndex = flag[asset.plugin] = tasks.length;
-                    task = tasks[taskIndex] = {
-                        group: [],
-                        execute: pluginCache[asset.plugin]
-                    };
-                }
-                
-                task.group.push( asset );
-            } );
-            
-            return tasks;
-        }
-    };
-    
-    
-    /* default plugin */
-    plugin.register( plugin.defaultPlugin, function( callback ){
-        
-        remote.get( this.group, callback );
-    } );
-    
-    
-    /* inject plugin */
-    var onAnalyze = function( asset ){
-        
-        var result = asset.id.match( rPlugin );
-        
-        if ( result ){
-            asset.plugin = result[1];
-            asset.id = result[2];
-        }
-        
-        !pluginCache[asset.plugin] && ( asset.plugin = plugin.defaultPlugin );
-    },
-    
-    router = function( group, callback ){
-        
-        when.apply( null, lang.map( plugin.sorting( group ), function( task ){
-            return function( promise ) {
-                
-                task.execute ? task.execute( function(){
-                    promise.resolve();
-                } ) : promise.resolve();
-            };
-        } ) ).then( callback );
-    };
-    
-    
-    config.register({
-        keys: 'plugin',
-        rule: function( current, key, val ){
-            
-            val = !!val;
-            
-            if ( current === val ){
-                return;
-            }
-            
-            this.plugin = val;
-            
-            if ( val === true ){
-                event.on( ANALYZE, onAnalyze );
-                remote.bring = router;
-            } else {
-                event.off( ANALYZE, onAnalyze );
-                remote.bring = remote.get;
-            }
-        }
-    })
-    .set({
-        plugin: true
-    });
-    
-    
-    return plugin;
-    
-} );
-
-
-/**
- * @module fmd/preload
- * @author Edgar <mail@edgar.im>
- * @version v0.1
- * @date 131010
- * */
-
-
-fmd( 'preload', ['global','lang','event','when','request','loader'],
-    function( global, lang, event, when, request, loader ){
-    'use strict';
-    
-    /**
-     * Thanks to:
-     * HeadJS, https://github.com/headjs/headjs/blob/master/src/load.js
-     * YUI3, https://github.com/yui/yui3/blob/v3.13.0/src/get/js/get.js
-     * lazyload, https://github.com/rgrove/lazyload/blob/master/lazyload.js
-     * LABjs, https://github.com/getify/LABjs/blob/2.0/LAB.src.js
-     * */
-     
-    var doc = global.document,
-        isSupportAsync = 'async' in doc.createElement('script') || 'MozAppearance' in doc.documentElement.style || global.opera;
-    
-    var TYPE_CACHE = 'text/cache-javascript',
-        STATE_PRELOADING = 'preloading',
-        STATE_PRELOADED = 'preloaded';
-    
-    
-    event.on( 'createNode', function( node, asset ){
-        
-        if ( asset.isPreload ){
-            node.async = false;
-            node.defer = false;
-            
-            !isSupportAsync && ( node.type = TYPE_CACHE );
-        }
-    } );
-    
-    event.on( 'request', function( asset, callback ){
-        
-        if ( asset.preState ){
-            if ( asset.preState === STATE_PRELOADING ){
-                asset.onpreload.push(function(){
-                    loader( asset, callback );
-                });
-                
-                delete asset.state;
-                asset.requested = true;
-            } else {
-                delete asset.requested;
-                delete asset.isPreload;
-            }
-        }
-    } );
-    
-    
-    var preRequest = function( asset ){
-        
-        if ( !asset.preState ){
-            asset.preState = STATE_PRELOADING;
-            asset.onpreload = [];
-            
-            request( asset, function(){
-                
-                asset.preState = STATE_PRELOADED;
-                lang.forEach( asset.onpreload, function( call ){
-                    call();
-                } );
-            } );
-        }
-    };
-    
-    
-    var preloadByAsync = function( group, callback ){
-        
-        when.apply( null, lang.map( group, function( asset ){
-            return function( promise ){
-                asset.isPreload = true;
-                loader( asset, function(){
-                    promise.resolve();
-                } );
-            };
-        } ) ).then( callback );
-    },
-    
-    preloadByCache = function( group, callback ){
-        
-        var rest = group.slice( 1 );
-        
-        if ( rest.length ){
-            lang.forEach( group, function( asset ){
-                if ( !asset.isPreload ){
-                    asset.isPreload = true;
-                    preRequest( asset );
-                }
-            } );
-            
-            loader( group[0], function(){
-                preload( rest, callback );
-            } );
-        } else {
-            loader( group[0], callback );
-        }
-    },
-    
-    preload = function( group, callback ){
-        
-        preload = isSupportAsync ? preloadByAsync : preloadByCache;
-        
-        preload( group, callback );
-    };
-    
-    
-    return preload;
-    
-} );
-
-
-/**
- * @module fmd/non
- * @author Edgar <mail@edgar.im>
- * @version v0.2
- * @date 131015
- * */
-
-
-fmd( 'non', ['plugin','preload'],
-    function( plugin, preload ){
-    'use strict';
-    
-    plugin.register( 'non', function( callback ){
-        
-        preload( this.group, callback );
-    } );
     
 } );
