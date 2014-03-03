@@ -1,6 +1,6 @@
 /*!!cmd:compress=true*/
 /*!!cmd:jsCompressOpt=["--disable-optimizations"]*/
-/*! lofty.js build 14/02/28 16:24:36 */
+/*! lofty.js build 14/03/03 12:42:47 */
 /*! fmd.js v0.2.1 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot
@@ -1928,7 +1928,6 @@ lofty.on( 'requestTimeout', function( asset ){
 var rStyle = /\.css(?:\?|$)/;
 
 lofty.config({
-    async: false,
     plugin: false,
     combo: false,
     resolve: function( id ){

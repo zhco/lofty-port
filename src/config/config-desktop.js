@@ -5,7 +5,6 @@
 var rStyle = /\.css(?:\?|$)/;
 
 lofty.config({
-    async: false,
     plugin: false,
     combo: false,
     resolve: function( id ){
