@@ -1,4 +1,4 @@
-/*! lofty.js build 14/03/13 22:27:48 */
+/*! lofty.js build 14/03/14 01:17:40 */
 /*! fmd.js v0.2.1 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot
@@ -1863,7 +1863,7 @@ if ( window.Wing && Wing.navigator ){
     
     fmd( 'lofty/mobile', ['event'], function( event ){
         
-        var rUrl = /^https?:\/\/(?:[\w\.:]+)\/m\/([\w\/]+\.\w+)+(?:\?.*)?/i;
+        var rUrl = /^https?:\/\/(?:[\w\.:]+)\/m\/([\w\.\/]+\.\w+)+(?:\?.*)?/i;
         
         var turn = function( url ){
             

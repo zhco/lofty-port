@@ -8,7 +8,7 @@ if ( window.Wing && Wing.navigator ){
     
     fmd( 'lofty/mobile', ['event'], function( event ){
         
-        var rUrl = /^https?:\/\/(?:[\w\.:]+)\/m\/([\w\/]+\.\w+)+(?:\?.*)?/i;
+        var rUrl = /^https?:\/\/(?:[\w\.:]+)\/m\/([\w\.\/]+\.\w+)+(?:\?.*)?/i;
         
         var turn = function( url ){
             
