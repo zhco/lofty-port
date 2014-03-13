@@ -33,7 +33,6 @@ module.exports = function( grunt ){
         'vendor/fmdjs/plugins/combo-debug.js',
         'src/wrap/intro.js',
         'src/host/appframe.js',
-        'src/host/convert.js',
         'src/host/client.js',
         'src/host/debug.js',
         'src/host/debug-mobile.js',

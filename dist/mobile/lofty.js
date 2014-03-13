@@ -1,4 +1,4 @@
-/*! lofty.js build 14/02/28 16:24:54 */
+/*! lofty.js build 14/03/13 22:27:48 */
 /*! fmd.js v0.2.1 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot
@@ -1853,36 +1853,21 @@ lofty.appframe = appframe;
 lofty.cache = fmd.cache;
 
 
-/*
- * url convert
- * */
-
-var rId = /([a-z])([A-Z])/g;
-
-lofty.on( 'resolve', function( asset ){
-    
-    asset.url = asset.url.replace( rId, function( s, s1, s2 ){
-        return s1 + '-' + s2;
-    } ).toLowerCase();
-} );
-
-
 /**
  * for load assets from mobile
  * */
 
 if ( window.Wing && Wing.navigator ){
     
-    var isRealWing = !!Wing.navigator.getRealURL,
-        wingNavigator = Wing.navigator;
+    var wingNavigator = Wing.navigator;
     
     fmd( 'lofty/mobile', ['event'], function( event ){
         
-        var rLocal = isRealWing ? /^https?\:\/\/(?:[\w|\.|\:]+)\/m\/(.*\.\w*)(?:[\?|\#].*)/i : /^https?\:\/\/(?:[\w|\.|\:]+)\/m(\/.*)/i;
+        var rUrl = /^https?:\/\/(?:[\w\.:]+)\/m\/([\w\/]+\.\w+)+(?:\?.*)?/i;
         
         var turn = function( url ){
             
-            var result = url.match( rLocal );
+            var result = url.match( rUrl );
             
             return result && result[1];
         };
@@ -1893,9 +1878,7 @@ if ( window.Wing && Wing.navigator ){
             
             if ( localUrl ){
                 
-                if ( isRealWing ){
-                    localUrl = wingNavigator.getRealURL( localUrl );
-                }
+                localUrl = wingNavigator.getRealURL( localUrl );
                 
                 if ( localUrl ){
                     asset.url = localUrl;

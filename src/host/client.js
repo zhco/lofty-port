@@ -4,16 +4,15 @@
 
 if ( window.Wing && Wing.navigator ){
     
-    var isRealWing = !!Wing.navigator.getRealURL,
-        wingNavigator = Wing.navigator;
+    var wingNavigator = Wing.navigator;
     
     fmd( 'lofty/mobile', ['event'], function( event ){
         
-        var rLocal = isRealWing ? /^https?\:\/\/(?:[\w|\.|\:]+)\/m\/(.*\.\w*)(?:[\?|\#].*)/i : /^https?\:\/\/(?:[\w|\.|\:]+)\/m(\/.*)/i;
+        var rUrl = /^https?:\/\/(?:[\w\.:]+)\/m\/([\w\/]+\.\w+)+(?:\?.*)?/i;
         
         var turn = function( url ){
             
-            var result = url.match( rLocal );
+            var result = url.match( rUrl );
             
             return result && result[1];
         };
@@ -24,9 +23,7 @@ if ( window.Wing && Wing.navigator ){
             
             if ( localUrl ){
                 
-                if ( isRealWing ){
-                    localUrl = wingNavigator.getRealURL( localUrl );
-                }
+                localUrl = wingNavigator.getRealURL( localUrl );
                 
                 if ( localUrl ){
                     asset.url = localUrl;
