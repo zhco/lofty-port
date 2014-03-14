@@ -1,5 +1,5 @@
-/*! lofty.js build 14/03/14 01:28:35 */
-/*! fmd.js v0.2.1 | http://fmdjs.org/ | MIT */
+/*! lofty.js build 14/03/14 12:02:03 */
+/*! fmd.js v0.2.2 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot
  * @author Edgar <mail@edgar.im>
@@ -51,7 +51,7 @@
     };
     
     
-    fmd.version = '0.2.1';
+    fmd.version = '0.2.2';
     
     fmd.cache = {
         parts: parts
@@ -675,8 +675,8 @@ fmd( 'relative', ['lang','event','module'],
 /**
  * @module fmd/id2url
  * @author Edgar <mail@edgar.im>
- * @version v0.2
- * @date 131015
+ * @version v0.2.1
+ * @date 140314
  * */
 
 
@@ -693,10 +693,10 @@ fmd( 'id2url', ['global','event','config'],
     
     config.set({
         baseUrl: (function(){
-            var rUrl = /(?:[\w]+)\:\/\/(?:[\w|\.|\:]+)\//i,
+            var rDomain = /^\w+\:\/\/[\w\-\.:]+\//i,
                 scripts = global.document.getElementsByTagName('script'),
                 selfScript = scripts[scripts.length-1],
-                selfUrl = ( selfScript.hasAttribute ? selfScript.src : selfScript.getAttribute("src", 4) ).match( rUrl );
+                selfUrl = ( selfScript.hasAttribute ? selfScript.src : selfScript.getAttribute("src", 4) ).match( rDomain );
             
             return selfUrl[0];
         })()
@@ -1580,8 +1580,8 @@ fmd( 'non', ['plugin','preload'],
 /**
  * @module fmd/combo
  * @author Edgar <mail@edgar.im>
- * @version v0.1
- * @date 131010
+ * @version v0.1.1
+ * @date 140314
  * */
 
 
@@ -1605,7 +1605,7 @@ fmd( 'combo', ['cache','lang','event','config','module','assets','plugin','when'
         EVENT_FETCH = 'fetch';
     
     var rStyle = /\.css(?:\?|$)/i,
-        rSplitUrl = /((?:[\w]+)\:\/\/(?:[\w|\.|\:]+)\/)(.+)/i;
+        rSplitUrl = /(^\w+\:\/\/[\w\-\.:]+\/)(.+)/i;
     
     var comboSyntax = ['??', ','],
         comboMaxLength = 1500;
@@ -1863,7 +1863,7 @@ if ( window.Wing && Wing.navigator ){
     
     fmd( 'lofty/mobile', ['event'], function( event ){
         
-        var rUrl = /^https?:\/\/(?:[\w\.:]+)\/m\/(.+\.\w+)+(?:\?.*)?/i;
+        var rUrl = /^https?:\/\/[\w\-\.:]+\/m\/(.+\.\w+)+(?:\?.*)?$/i;
         
         var turn = function( url ){
             
@@ -1873,7 +1873,7 @@ if ( window.Wing && Wing.navigator ){
         };
         
         event.on( 'id2url', function( asset ){
-            //http://style.c.aliimg.com/m/lofty/lang/observer.js?fmd.stamp=xxx
+            //http://style.c.aliimg.com/m/lofty/ui/2.0/a-observer.js?fmd.stamp=xxx
             var localUrl = turn( asset.url );
             
             if ( localUrl ){

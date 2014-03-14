@@ -8,7 +8,7 @@ if ( window.Wing && Wing.navigator ){
     
     fmd( 'lofty/mobile', ['event'], function( event ){
         
-        var rUrl = /^https?:\/\/(?:[\w\.:]+)\/m\/(.+\.\w+)+(?:\?.*)?/i;
+        var rUrl = /^https?:\/\/[\w\-\.:]+\/m\/(.+\.\w+)+(?:\?.*)?$/i;
         
         var turn = function( url ){
             
@@ -18,7 +18,7 @@ if ( window.Wing && Wing.navigator ){
         };
         
         event.on( 'id2url', function( asset ){
-            //http://style.c.aliimg.com/m/lofty/lang/observer.js?fmd.stamp=xxx
+            //http://style.c.aliimg.com/m/lofty/ui/2.0/a-observer.js?fmd.stamp=xxx
             var localUrl = turn( asset.url );
             
             if ( localUrl ){
