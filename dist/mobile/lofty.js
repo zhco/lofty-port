@@ -1,5 +1,5 @@
-/*! lofty.js build 14/03/14 12:02:03 */
-/*! fmd.js v0.2.2 | http://fmdjs.org/ | MIT */
+/*! lofty.js build 14/03/21 23:56:04 */
+/*! fmd.js v0.2.3 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot
  * @author Edgar <mail@edgar.im>
@@ -51,7 +51,7 @@
     };
     
     
-    fmd.version = '0.2.2';
+    fmd.version = '0.2.3';
     
     fmd.cache = {
         parts: parts
@@ -675,8 +675,8 @@ fmd( 'relative', ['lang','event','module'],
 /**
  * @module fmd/id2url
  * @author Edgar <mail@edgar.im>
- * @version v0.2.1
- * @date 140314
+ * @version v0.2.2
+ * @date 140320
  * */
 
 
@@ -698,7 +698,7 @@ fmd( 'id2url', ['global','event','config'],
                 selfScript = scripts[scripts.length-1],
                 selfUrl = ( selfScript.hasAttribute ? selfScript.src : selfScript.getAttribute("src", 4) ).match( rDomain );
             
-            return selfUrl[0];
+            return selfUrl ? selfUrl[0] : '';
         })()
     });
     
@@ -1863,7 +1863,7 @@ if ( window.Wing && Wing.navigator ){
     
     fmd( 'lofty/mobile', ['event'], function( event ){
         
-        var rUrl = /^https?:\/\/[\w\-\.:]+\/m\/(.+\.\w+)+(?:\?.*)?$/i;
+        var rUrl = /^(?:\D+:.+\/)?m\/(.+\.\w+)+(?:\?.*)?$/i;
         
         var turn = function( url ){
             
@@ -1929,9 +1929,6 @@ lofty.on( 'requireFailed', function( meta ){
     if ( !meta.id || meta.id.indexOf('.css') > 0 ){
         meta.truth = false;
     }
-} );
-
-lofty.on( 'requireFailed', function( meta ){
     
     meta.truth && lofty.log( meta.id + ': not found!', 'warn' );
 } );

@@ -32,9 +32,6 @@ lofty.on( 'requireFailed', function( meta ){
     if ( !meta.id || meta.id.indexOf('.css') > 0 ){
         meta.truth = false;
     }
-} );
-
-lofty.on( 'requireFailed', function( meta ){
     
     meta.truth && lofty.log( meta.id + ': not found!', 'warn' );
 } );
