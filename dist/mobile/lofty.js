@@ -1,4 +1,4 @@
-/*! lofty.js build 14/03/21 23:56:04 */
+/*! lofty.js build 14/05/14 16:05:12 */
 /*! fmd.js v0.2.3 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot
@@ -1901,7 +1901,7 @@ if ( window.Wing && Wing.navigator ){
 
 lofty.on( 'existed', function( meta ){
     
-    lofty.log( meta.id + ': already exists.' );
+    lofty.log( meta.id + ': already exists.', 'error' );
 } );
 
 lofty.on( 'compiled', function( meta ){
@@ -1930,7 +1930,7 @@ lofty.on( 'requireFailed', function( meta ){
         meta.truth = false;
     }
     
-    meta.truth && lofty.log( meta.id + ': not found!', 'warn' );
+    meta.truth && lofty.log( meta.id + ': not found!', 'error' );
 } );
     
 lofty.on( 'requested', function( asset ){
@@ -1940,7 +1940,7 @@ lofty.on( 'requested', function( asset ){
 
 lofty.on( 'requestTimeout', function( asset ){
     
-    lofty.log( 'request ' + asset.url + ' timeout!', 'warn' );
+    lofty.log( 'request ' + asset.url + ' timeout!', 'error' );
 } );
 
 
@@ -1950,12 +1950,12 @@ lofty.on( 'requestTimeout', function( asset ){
  
 lofty.on( 'mobileAssetNotMatch', function( asset ){
     
-    lofty.log( asset.id + "'s " + asset.url + ' is not match for mobile!', 'warn' );
+    lofty.log( asset.id + "'s " + asset.url + ' is not match for mobile!', 'error' );
 } );
 
 lofty.on( 'mobileAssetNotFound', function( asset ){
     
-    lofty.log( asset.id + ': not found in mobile!', 'warn' );
+    lofty.log( asset.id + ': not found in mobile!', 'error' );
 } );
 
 
@@ -2007,15 +2007,23 @@ lofty.config({
 		"fui/widget/1.0": "lofty/ui/widget/1.0/widget",
 		"fui/popup/1.0": "lofty/ui/popup/1.0/popup",
 		"fui/actionsheet/1.0": "lofty/ui/actionsheet/1.0/actionsheet",
+        "fui/button/1.0": "lofty/ui/button/1.0/button",
 		"fui/swipe/1.0": "lofty/ui/swipe/1.0/swipe",
 		"fui/suggestion/1.0": "lofty/ui/suggestion/1.0/suggestion",
 		"fui/autocomplete/1.0": "lofty/ui/autocomplete/1.0/autocomplete",
 		"fui/autocomplete/filter/1.0": "lofty/ui/autocomplete/1.0/filter",
         "fui/scroller/1.0": "lofty/ui/scroller/1.0/scroller",
+		"fui/chooser/1.0": "lofty/ui/chooser/1.0/chooser",
         "fui/timer/1.0/timer": "lofty/ui/timer/1.0/timer",
         "fui/crazyimg/1.0/crazyimg": "lofty/ui/crazyimg/1.0/crazyimg",
+        "fui/slider/1.0":"lofty/ui/slider/1.0/slider",
+        "fui/wormhole/1.0/wormhole": "lofty/ui/wormhole/1.0/wormhole",
         
         "alicn/now/1.0": "lofty/alicn/now/1.0/now",
+        "alicn/alitalk/1.0": "lofty/alicn/alitalk/1.0/alitalk",
+		"alicn/address/chooser/1.0": "lofty/alicn/address/1.0/address-chooser",
+		"alicn/address/data/1.0": "lofty/alicn/address/1.0/data",
+        "alicn/resourceslot/1.0": "lofty/alicn/resourceslot/1.0/resourceslot",
 
 		"util/cookie/1.0":"lofty/util/cookie/1.0/cookie",
 		"util/storage/1.0":"lofty/util/storage/1.0/storage",
@@ -2023,9 +2031,29 @@ lofty.config({
 		"util/template/1.0":"lofty/util/template/1.0/template",
 		"util/tplhandler/1.0":"lofty/util/template/1.0/tplhandler",
 		"util/router/1.0":"lofty/util/router/1.0/router",
-		"util/lazyload/1.0":"lofty/util/lazyload/1.0/lazyload"
+		"util/lazyload/1.0":"lofty/util/lazyload/1.0/lazyload",
+        "util/date/1.0":"lofty/util/date/1.0/date",
+		"util/webp/1.0":"lofty/util/webp/1.0/webp",
+        "util/css3animate/1.0":"lofty/util/css3animate/1.0/css3animate",
+        "util/detect/1.0":"lofty/util/detect/1.0/detect",
+        "util/presseffect/1.0": "lofty/util/presseffect/1.0/presseffect"
     }
 });
+
+
+/* hook for jQuery */
+if ( window.jQuery ){
+    
+    define( 'gallery/jquery/jqueryLatest', function(){
+        return jQuery;
+    } );
+    
+    lofty.config({
+        alias: {
+            'jquery': 'gallery/jquery/jqueryLatest'
+        }
+    });
+}
 
 
 /* hook for af */

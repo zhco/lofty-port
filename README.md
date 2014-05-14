@@ -1,1 +1,1 @@
-the kernel of the lofty-desktop and lofty-mobile
+the port of the lofty-desktop and lofty-mobile

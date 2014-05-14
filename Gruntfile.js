@@ -38,6 +38,7 @@ module.exports = function( grunt ){
         'src/host/debug-mobile.js',
         'src/config/config-mobile.js',
         'src/config/alias-mobile.js',
+        'src/hooks/jquery.js',
         'src/hooks/af.js',
         'src/hooks/test-env.js',
         'src/wrap/outro.js'

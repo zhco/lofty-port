@@ -4,7 +4,7 @@
 
 lofty.on( 'existed', function( meta ){
     
-    lofty.log( meta.id + ': already exists.' );
+    lofty.log( meta.id + ': already exists.', 'error' );
 } );
 
 lofty.on( 'compiled', function( meta ){
@@ -33,7 +33,7 @@ lofty.on( 'requireFailed', function( meta ){
         meta.truth = false;
     }
     
-    meta.truth && lofty.log( meta.id + ': not found!', 'warn' );
+    meta.truth && lofty.log( meta.id + ': not found!', 'error' );
 } );
     
 lofty.on( 'requested', function( asset ){
@@ -43,5 +43,5 @@ lofty.on( 'requested', function( asset ){
 
 lofty.on( 'requestTimeout', function( asset ){
     
-    lofty.log( 'request ' + asset.url + ' timeout!', 'warn' );
+    lofty.log( 'request ' + asset.url + ' timeout!', 'error' );
 } );
