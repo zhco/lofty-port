@@ -1,7 +1,7 @@
 /**
  * the Gruntfile for lofty
  * @author Edgar
- * @date 140228
+ * @date 140514
  * */
 
 module.exports = function( grunt ){
@@ -38,8 +38,8 @@ module.exports = function( grunt ){
         'src/host/debug-mobile.js',
         'src/config/config-mobile.js',
         'src/config/alias-mobile.js',
-        'src/hooks/jquery.js',
         'src/hooks/af.js',
+        'src/hooks/jquery.js',
         'src/hooks/test-env.js',
         'src/wrap/outro.js'
     ],
