@@ -1,13 +1,13 @@
 /* hook for jQuery */
 if ( window.jQuery ){
     
-    define( 'gallery/jquery/jquery-latest', function(){
+    define( 'gallery/jquery/jqueryLatest', function(){
         return jQuery;
     } );
     
     lofty.config({
         alias: {
-            'jquery': 'gallery/jquery/jquery-latest'
+            'jquery': 'gallery/jquery/jqueryLatest'
         }
     });
 }

@@ -21,7 +21,7 @@ module.exports = function( grunt ){
         'src/host/debug.js',
         'src/config/config-desktop.js',
         'src/config/alias-desktop.js',
-        'src/hooks/jquery.js',
+        'src/adapter/jquery.js',
         'src/adapter/af.js',
         'src/hooks/test-env.js',
         'src/wrap/outro.js'

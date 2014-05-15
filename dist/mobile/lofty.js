@@ -1,4 +1,4 @@
-/*! lofty.js build 14/05/14 16:07:48 */
+/*! lofty.js build 14/05/15 13:42:01 */
 /*! fmd.js v0.2.3 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot
@@ -2059,13 +2059,13 @@ if ( window.af ){
 /* hook for jQuery */
 if ( window.jQuery ){
     
-    define( 'gallery/jquery/jqueryLatest', function(){
+    define( 'gallery/jquery/jquery-latest', function(){
         return jQuery;
     } );
     
     lofty.config({
         alias: {
-            'jquery': 'gallery/jquery/jqueryLatest'
+            'jquery': 'gallery/jquery/jquery-latest'
         }
     });
 }
