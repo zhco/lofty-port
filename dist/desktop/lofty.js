@@ -1,7 +1,7 @@
 /*!!cmd:compress=true*/
 /*!!cmd:jsCompressOpt=["--disable-optimizations"]*/
-/*! lofty.js build 14/03/03 12:42:47 */
-/*! fmd.js v0.2.1 | http://fmdjs.org/ | MIT */
+/*! lofty.js build 14/06/02 21:10:27 */
+/*! fmd.js v0.2.4 | http://fmdjs.org/ | MIT */
 /**
  * @module fmd/boot
  * @author Edgar <mail@edgar.im>
@@ -53,7 +53,7 @@
     };
     
     
-    fmd.version = '0.2.1';
+    fmd.version = '0.2.4';
     
     fmd.cache = {
         parts: parts
@@ -677,8 +677,8 @@ fmd( 'relative', ['lang','event','module'],
 /**
  * @module fmd/id2url
  * @author Edgar <mail@edgar.im>
- * @version v0.2
- * @date 131015
+ * @version v0.2.3
+ * @date 140516
  * */
 
 
@@ -695,12 +695,13 @@ fmd( 'id2url', ['global','event','config'],
     
     config.set({
         baseUrl: (function(){
-            var rUrl = /(?:[\w]+)\:\/\/(?:[\w|\.|\:]+)\//i,
+            var rDomain = /^\w+\:\/\/[\w\-\.:]+\//i,
                 scripts = global.document.getElementsByTagName('script'),
                 selfScript = scripts[scripts.length-1],
-                selfUrl = ( selfScript.hasAttribute ? selfScript.src : selfScript.getAttribute("src", 4) ).match( rUrl );
+                src = selfScript.hasAttribute ? selfScript.src : selfScript.getAttribute( 'src', 4 ),
+                selfUrl = src ? src.match( rDomain ) : null;
             
-            return selfUrl[0];
+            return selfUrl ? selfUrl[0] : '';
         })()
     });
     
@@ -1582,8 +1583,8 @@ fmd( 'non', ['plugin','preload'],
 /**
  * @module fmd/combo
  * @author Edgar <mail@edgar.im>
- * @version v0.1
- * @date 131010
+ * @version v0.1.1
+ * @date 140314
  * */
 
 
@@ -1607,7 +1608,7 @@ fmd( 'combo', ['cache','lang','event','config','module','assets','plugin','when'
         EVENT_FETCH = 'fetch';
     
     var rStyle = /\.css(?:\?|$)/i,
-        rSplitUrl = /((?:[\w]+)\:\/\/(?:[\w|\.|\:]+)\/)(.+)/i;
+        rSplitUrl = /(^\w+\:\/\/[\w\-\.:]+\/)(.+)/i;
     
     var comboSyntax = ['??', ','],
         comboMaxLength = 1500;
@@ -1875,7 +1876,7 @@ lofty.on( 'resolve', function( asset ){
 
 lofty.on( 'existed', function( meta ){
     
-    lofty.log( meta.id + ': already exists.' );
+    lofty.log( meta.id + ': already exists.', 'error' );
 } );
 
 lofty.on( 'compiled', function( meta ){
@@ -1903,11 +1904,8 @@ lofty.on( 'requireFailed', function( meta ){
     if ( !meta.id || meta.id.indexOf('.css') > 0 ){
         meta.truth = false;
     }
-} );
-
-lofty.on( 'requireFailed', function( meta ){
     
-    meta.truth && lofty.log( meta.id + ': not found!', 'warn' );
+    meta.truth && lofty.log( meta.id + ': not found!', 'error' );
 } );
     
 lofty.on( 'requested', function( asset ){
@@ -1917,7 +1915,7 @@ lofty.on( 'requested', function( asset ){
 
 lofty.on( 'requestTimeout', function( asset ){
     
-    lofty.log( 'request ' + asset.url + ' timeout!', 'warn' );
+    lofty.log( 'request ' + asset.url + ' timeout!', 'error' );
 } );
 
 
@@ -1993,7 +1991,8 @@ lofty.config({
         "fui/position/1.0":"lofty/ui/position/1.0/position",
         "fui/timer/1.0":"lofty/ui/timer/1.0/timer",
         "fui/sidebar/2.0":"lofty/ui/sidebar/2.0/sidebar",
-        
+        "fui/datepicker/1.0":"lofty/ui/datepicker/1.0/datepicker",
+        "fui/qrcode/1.0":"lofty/ui/qrcode/1.0/qrcode",
 
         // Util Components
         "util/cookie/1.0":"lofty/util/cookie/1.0/cookie",
@@ -2002,8 +2001,13 @@ lofty.config({
         "util/misc/1.0":"lofty/util/misc/1.0/misc",
         "util/history/1.0":"lofty/util/history/1.0/history",
         "util/template/1.0":"lofty/util/template/1.0/template",
+		"util/template/2.0":"lofty/util/template/2.0/template",
         "util/history-manager/1.0":"lofty/util/history/1.0/history-manager",
         "util/datalazyload/1.0":"lofty/util/datalazyload/1.0/datalazyload",
+        "util/date/1.0":"lofty/util/date/1.0/date",
+        "util/misc/2.0":"lofty/util/misc/2.0/misc",
+        "util/string/1.0":"lofty/util/string/1.0/string",
+		"util/webp/1.0":"lofty/util/webp/1.0/webp",
         
         // Alibaba Bussiness Components
         "alicn/now/1.0":"lofty/alicn/now/1.0/now",
@@ -2015,7 +2019,8 @@ lofty.config({
         "alicn/alitalk-shunt/1.0":"lofty/alicn/alitalk/1.0/alitalk-shunt",
         
         // Alibaba sys Components
-        "sys/alibar/1.0":"sys/universal/alibar/standard-v5"
+        "sys/alibar/1.0":"sys/universal/alibar/standard-v5",
+        "sys/logist/1.0":"sys/logist/logist-fdev5"
     }
 });
 

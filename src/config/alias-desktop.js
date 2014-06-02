@@ -33,7 +33,8 @@ lofty.config({
         "fui/position/1.0":"lofty/ui/position/1.0/position",
         "fui/timer/1.0":"lofty/ui/timer/1.0/timer",
         "fui/sidebar/2.0":"lofty/ui/sidebar/2.0/sidebar",
-        
+        "fui/datepicker/1.0":"lofty/ui/datepicker/1.0/datepicker",
+        "fui/qrcode/1.0":"lofty/ui/qrcode/1.0/qrcode",
 
         // Util Components
         "util/cookie/1.0":"lofty/util/cookie/1.0/cookie",
@@ -42,8 +43,13 @@ lofty.config({
         "util/misc/1.0":"lofty/util/misc/1.0/misc",
         "util/history/1.0":"lofty/util/history/1.0/history",
         "util/template/1.0":"lofty/util/template/1.0/template",
+		"util/template/2.0":"lofty/util/template/2.0/template",
         "util/history-manager/1.0":"lofty/util/history/1.0/history-manager",
         "util/datalazyload/1.0":"lofty/util/datalazyload/1.0/datalazyload",
+        "util/date/1.0":"lofty/util/date/1.0/date",
+        "util/misc/2.0":"lofty/util/misc/2.0/misc",
+        "util/string/1.0":"lofty/util/string/1.0/string",
+		"util/webp/1.0":"lofty/util/webp/1.0/webp",
         
         // Alibaba Bussiness Components
         "alicn/now/1.0":"lofty/alicn/now/1.0/now",
@@ -55,6 +61,7 @@ lofty.config({
         "alicn/alitalk-shunt/1.0":"lofty/alicn/alitalk/1.0/alitalk-shunt",
         
         // Alibaba sys Components
-        "sys/alibar/1.0":"sys/universal/alibar/standard-v5"
+        "sys/alibar/1.0":"sys/universal/alibar/standard-v5",
+        "sys/logist/1.0":"sys/logist/logist-fdev5"
     }
 });
