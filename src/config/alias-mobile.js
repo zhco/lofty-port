@@ -9,6 +9,7 @@ lofty.config({
         "lofty/class": "lofty/lang/class",
         "lofty/log": "lofty/lang/log",
         "lofty/aop": "lofty/lang/aop",
+        "fastclick": "lofty/gallery/fastclick/fastclick",
 
 		/**
 			//////////////////////// Mobile alias ////////////////////////////////
@@ -24,14 +25,21 @@ lofty.config({
 		"fui/autocomplete/filter/1.0": "lofty/ui/autocomplete/1.0/filter",
         "fui/scroller/1.0": "lofty/ui/scroller/1.0/scroller",
 		"fui/chooser/1.0": "lofty/ui/chooser/1.0/chooser",
+        /* compatible change */
+        "fui/timer/1.0": "lofty/ui/timer/1.0/timer",
         "fui/timer/1.0/timer": "lofty/ui/timer/1.0/timer",
+        /* compatible change */
+        "fui/crazyimg/1.0": "lofty/ui/crazyimg/1.0/crazyimg",
         "fui/crazyimg/1.0/crazyimg": "lofty/ui/crazyimg/1.0/crazyimg",
         "fui/slider/1.0":"lofty/ui/slider/1.0/slider",
+        /* compatible change */
+        "fui/wormhole/1.0": "lofty/ui/wormhole/1.0/wormhole",
         "fui/wormhole/1.0/wormhole": "lofty/ui/wormhole/1.0/wormhole",
         
         "alicn/now/1.0": "lofty/alicn/now/1.0/now",
         "alicn/alitalk/1.0": "lofty/alicn/alitalk/1.0/alitalk",
-		"alicn/address/chooser/1.0": "lofty/alicn/address/1.0/address-chooser",
+        /* compatible change */
+		"alicn/address/chooser/1.0": "lofty/alicn/address/1.0/chooser",
 		"alicn/address/data/1.0": "lofty/alicn/address/1.0/data",
         "alicn/resourceslot/1.0": "lofty/alicn/resourceslot/1.0/resourceslot",
 
@@ -39,6 +47,9 @@ lofty.config({
 		"util/storage/1.0":"lofty/util/storage/1.0/storage",
 		"util/history/1.0":"lofty/util/history/1.0/history",
 		"util/template/1.0":"lofty/util/template/1.0/template",
+		"util/template/2.0": "lofty/util/template/2.0/template",
+        /* compatible change */
+        "util/template/tplhandler/1.0":"lofty/util/template/1.0/tplhandler",
 		"util/tplhandler/1.0":"lofty/util/template/1.0/tplhandler",
 		"util/router/1.0":"lofty/util/router/1.0/router",
 		"util/lazyload/1.0":"lofty/util/lazyload/1.0/lazyload",
